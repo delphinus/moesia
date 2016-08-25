@@ -28,7 +28,7 @@ func New() (self *Browser, err error) {
 }
 
 func (b *Browser) setPage() (err error) {
-	capabilities = agouti.NewCapabilities()
+	capabilities := agouti.NewCapabilities()
 	capabilities.Browser("safari")
 	capabilities.Platform("MAC")
 	if b.page, err = b.driver.NewPage(agouti.Desired(capabilities)); err != nil {
