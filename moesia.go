@@ -20,9 +20,10 @@ func NewApp() (app *cli.App) {
 }
 
 func action(c *cli.Context) (err error) {
-	if _, err = browser.New(); err != nil {
+	b, err := browser.New()
+	if err != nil {
 		err = fmt.Errorf("Browser has occurred error: %v", err)
 		return
 	}
-	return
+	return b.Start()
 }
