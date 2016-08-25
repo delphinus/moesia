@@ -6,7 +6,9 @@ import (
 	"github.com/sclevine/agouti"
 )
 
-var topURL = "https://as.its-kenpo.or.jp/service_category/index"
+const topURL = "https://as.its-kenpo.or.jp/service_category/index"
+const pageWidth = 1280
+const pageHeight = 1024
 
 // Browser has WebDriver in property
 type Browser struct {
@@ -21,10 +23,19 @@ func New() (self *Browser, err error) {
 		err = fmt.Errorf("Failed to start driver: %v", err)
 		return
 	}
-	if self.page, err = self.driver.NewPage(agouti.Browser("phantomjs")); err != nil {
-		err = fmt.Errorf("Failed to open page: %v", err)
+	err = self.setPage()
+	return
+}
+
+func (b *Browser) setPage() (err error) {
+	capabilities = agouti.NewCapabilities()
+	capabilities.Browser("safari")
+	capabilities.Platform("MAC")
+	if b.page, err = b.driver.NewPage(agouti.Desired(capabilities)); err != nil {
+		err = fmt.Errorf("Failed to setPage(): %v", err)
 		return
 	}
+	b.page.Size(pageWidth, pageHeight)
 	return
 }
 
