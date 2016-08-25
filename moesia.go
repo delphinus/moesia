@@ -2,7 +2,8 @@ package moesia
 
 import (
 	"fmt"
-	"github.com/sclevine/agouti"
+
+	"github.com/delphinus35/moesia/browser"
 	"github.com/urfave/cli"
 )
 
@@ -19,9 +20,8 @@ func NewApp() (app *cli.App) {
 }
 
 func action(c *cli.Context) (err error) {
-	driver := agouti.PhantomJS()
-	if err = driver.Start(); err != nil {
-		err = fmt.Errorf("Failed to start driver: %v", err)
+	if _, err = browser.New(); err != nil {
+		err = fmt.Errorf("Browser has occurred error: %v", err)
 		return
 	}
 	return
