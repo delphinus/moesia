@@ -14,6 +14,9 @@ test: ## Run tests only
 build: ## Build binary
 	gom build ./cmd/moesia
 
+run: ## Build binary and run
+	gom run ./cmd/moesia/main.go
+
 install-dependencies: ## Install packages for dependencies
 	gom install
 
