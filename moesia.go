@@ -25,5 +25,13 @@ func action(c *cli.Context) (err error) {
 		err = fmt.Errorf("Browser has occurred error: %v", err)
 		return
 	}
-	return b.Start()
+	if err != b.Start() {
+		err = fmt.Errorf("Browser process has errors: %v", err)
+		return
+	}
+	if err != b.End() {
+		err = fmt.Errorf("Browser finish process has errors: %v", err)
+		return
+	}
+	return
 }

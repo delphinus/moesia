@@ -21,7 +21,6 @@ func New() (self *Browser, err error) {
 		err = fmt.Errorf("Failed to start driver: %v", err)
 		return
 	}
-	defer self.driver.Stop()
 	if self.page, err = self.driver.NewPage(agouti.Browser("phantomjs")); err != nil {
 		err = fmt.Errorf("Failed to open page: %v", err)
 		return
@@ -39,5 +38,11 @@ func (b *Browser) Start() (err error) {
 		err = fmt.Errorf("Failed to save SS: %v", err)
 		return
 	}
+	return
+}
+
+// End will finish the driver
+func (b *Browser) End() (err error) {
+	err = b.driver.Stop()
 	return
 }
