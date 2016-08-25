@@ -13,7 +13,7 @@ gom-update: ## Update gom
 test: ## Run tests only
 	gom test `go list ./... | grep -v vendor`
 
-build: gom install-dependencies ## Build binary
+build: ## Build binary
 	go build ./cmd/moesia
 
 install-dependencies: ## Install packages for dependencies
