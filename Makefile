@@ -27,4 +27,4 @@ ifeq ($(TRAVIS_BRANCH),)
 	$(error No Travis CI)
 endif
 
-travis-test: assert-on-travis gom install-test-dependencies test ## Run tests in Travis CI
+travis-test: assert-on-travis gom install-test-dependencies build test ## Run tests in Travis CI
