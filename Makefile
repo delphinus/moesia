@@ -21,3 +21,10 @@ install-dependencies: ## Install packages for dependencies
 
 install-test-dependencies: ## Install packages for dependencies with the `test` group
 	gom -test install
+
+assert-on-travis: ## Assert that this task is executed in Travis CI
+ifeq ($(TRAVIS_BRANCH),)
+	$(error No Travis CI)
+endif
+
+travis-test: assert-on-travis gom install-test-dependencies test ## Run tests in Travis CI
