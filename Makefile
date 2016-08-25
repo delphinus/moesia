@@ -12,7 +12,7 @@ test: ## Run tests only
 	gom test `go list ./... | grep -v vendor`
 
 build: ## Build binary
-	go build ./cmd/moesia
+	gom build ./cmd/moesia
 
 install-dependencies: ## Install packages for dependencies
 	gom install
