@@ -59,19 +59,25 @@ func (b *Browser) Start() (err error) {
 			err = fmt.Errorf("Failed to open hotel '%s': %v", hotel, err)
 			return
 		}
-		selections := b.page.AllByXPath(`//select[@id="apply_join_time"]/option`)
-		var i = 0
-		for {
-			selection := selections.At(i)
-			if selection == nil {
-				if i == 0 {
-					err = fmt.Errorf("Failed to find option in hotel '%s'", hotel)
-					return
-				}
-				break
+		monthLinks := b.page.AllByXPath(fmt.Sprintf("//a[contains(., '%s')]", hotel))
+		var monthLinkTexts []string
+		if monthLinkTexts, err = b.getTexts(monthLinks); err != nil {
+			return
+		}
+		for _, monthLinkText := range monthLinkTexts {
+			if err = b.page.FindByLink(monthLinkText).Click(); err != nil {
+				err = fmt.Errorf("Failed to click '%s' for hotel '%s': %v", monthLinkText, hotel, err)
+				return
 			}
-			fmt.Println(selection.String())
-			i++
+			options := b.page.AllByXPath(`//select[@id="apply_join_time"]/option`)
+			var optionTexts []string
+			if optionTexts, err = b.getTexts(options); err != nil {
+				return
+			}
+			for _, optionText := range optionTexts {
+				fmt.Printf("%s: %s\n", hotel, optionText)
+			}
+			b.page.Back()
 		}
 		b.page.Back()
 	}
