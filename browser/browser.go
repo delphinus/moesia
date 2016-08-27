@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/sclevine/agouti"
+	"github.com/sclevine/agouti/api"
 )
 
 const topURL = "https://as.its-kenpo.or.jp/service_category/index"
@@ -73,6 +74,26 @@ func (b *Browser) Start() (err error) {
 			i++
 		}
 		b.page.Back()
+	}
+	return
+}
+
+func (b *Browser) getTexts(multiSelection *agouti.MultiSelection) (texts []string, err error) {
+	var elements []*api.Element
+	elements, err = multiSelection.Elements()
+	if err != nil {
+		err = fmt.Errorf("Failed to get elements: %v", err)
+		return
+	}
+	for _, element := range elements {
+		var text string
+		if text, err = element.GetText(); err != nil {
+			err = fmt.Errorf("Failed to get text for element: %v", err)
+			return
+		}
+		if len(text) > 0 {
+			texts = append(texts, text)
+		}
 	}
 	return
 }
