@@ -12,7 +12,7 @@ const firstLinkText = "直営・通年・夏季保養施設(空き照会)"
 const pageWidth = 1280
 const pageHeight = 1024
 
-var hotelName = []string{"トスラブ箱根ビオーレ", "トスラブ箱根和奏林"}
+var hotels = []string{"トスラブ箱根ビオーレ", "トスラブ箱根和奏林"}
 
 // Browser has WebDriver in property
 type Browser struct {
@@ -53,7 +53,7 @@ func (b *Browser) Start() (err error) {
 		err = fmt.Errorf("Failed to click '%s': %v", firstLinkText, err)
 		return
 	}
-	for _, hotel := range hotelName {
+	for _, hotel := range hotels {
 		if err = b.page.FindByLink(hotel).Click(); err != nil {
 			err = fmt.Errorf("Failed to open hotel '%s': %v", hotel, err)
 			return
