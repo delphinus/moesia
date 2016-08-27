@@ -111,7 +111,7 @@ func (b *Browser) Screenshot() (filename string, err error) {
 		err = fmt.Errorf("ioutil.Tempfile failed: %v", err)
 		return
 	}
-	filename = file.Name()
+	filename = fmt.Sprintf("%s.png", file.Name())
 	if err = b.page.Screenshot(filename); err != nil {
 		err = fmt.Errorf("Failed to save SS: %v", err)
 		return
