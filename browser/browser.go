@@ -49,8 +49,8 @@ func (b *Browser) setPage() (err error) {
 	return
 }
 
-// Start will start scraping
-func (b *Browser) Start() (err error) {
+// Process will do scraping
+func (b *Browser) Process() (err error) {
 	if err = b.page._Navigate(topURL); err != nil {
 		err = fmt.Errorf("Failed to open topURL (%s): %v", topURL, err)
 		return

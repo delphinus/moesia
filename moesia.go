@@ -25,7 +25,7 @@ func action(c *cli.Context) (err error) {
 		err = fmt.Errorf("Browser has occurred error: %v", err)
 		return
 	}
-	if err = b.Start(); err != nil {
+	if err = b.Process(); err != nil {
 		filename, _ := b.Screenshot()
 		err = fmt.Errorf("Browser process has errors: %v, saved screenshot: %s", err, filename)
 		return
