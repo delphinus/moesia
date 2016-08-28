@@ -8,6 +8,8 @@ import (
 	"github.com/sclevine/agouti/api"
 )
 
+var isTest = false
+
 const topURL = "https://as.its-kenpo.or.jp/service_category/index"
 const firstLinkText = "直営・通年・夏季保養施設(空き照会)"
 const pageWidth = 1280
@@ -18,7 +20,7 @@ var hotels = []string{"トスラブ箱根ビオーレ", "トスラブ箱根和�
 // Browser has WebDriver in property
 type Browser struct {
 	driver *agouti.WebDriver
-	page   *agouti.Page
+	page   *Page
 }
 
 // New returns a new instance
@@ -36,40 +38,42 @@ func (b *Browser) setPage() (err error) {
 	capabilities := agouti.NewCapabilities()
 	capabilities.Browser("safari")
 	capabilities.Platform("MAC")
-	if b.page, err = b.driver.NewPage(agouti.Desired(capabilities)); err != nil {
+	var page *agouti.Page
+	if page, err = b.driver.NewPage(agouti.Desired(capabilities)); err != nil {
 		err = fmt.Errorf("Failed to setPage(): %v", err)
 		return
 	}
+	b.page = &Page{page}
 	b.page.Size(pageWidth, pageHeight)
 	return
 }
 
 // Start will start scraping
 func (b *Browser) Start() (err error) {
-	if err = b.page.Navigate(topURL); err != nil {
+	if err = b.page._Navigate(topURL); err != nil {
 		err = fmt.Errorf("Failed to open topURL (%s): %v", topURL, err)
 		return
 	}
-	if err = b.page.FindByLink(firstLinkText).Click(); err != nil {
+	if err = b.page._FindByLink(firstLinkText).Click(); err != nil {
 		err = fmt.Errorf("Failed to click '%s': %v", firstLinkText, err)
 		return
 	}
 	for _, hotel := range hotels {
-		if err = b.page.FindByLink(hotel).Click(); err != nil {
+		if err = b.page._FindByLink(hotel).Click(); err != nil {
 			err = fmt.Errorf("Failed to open hotel '%s': %v", hotel, err)
 			return
 		}
-		monthLinks := b.page.AllByXPath(fmt.Sprintf("//a[contains(., '%s')]", hotel))
+		monthLinks := b.page._AllByXPath(fmt.Sprintf("//a[contains(., '%s')]", hotel))
 		var monthLinkTexts []string
 		if monthLinkTexts, err = b.getTexts(monthLinks); err != nil {
 			return
 		}
 		for _, monthLinkText := range monthLinkTexts {
-			if err = b.page.FindByLink(monthLinkText).Click(); err != nil {
+			if err = b.page._FindByLink(monthLinkText).Click(); err != nil {
 				err = fmt.Errorf("Failed to click '%s' for hotel '%s': %v", monthLinkText, hotel, err)
 				return
 			}
-			options := b.page.AllByXPath(`//select[@id="apply_join_time"]/option`)
+			options := b.page._AllByXPath(`//select[@id="apply_join_time"]/option`)
 			var optionTexts []string
 			if optionTexts, err = b.getTexts(options); err != nil {
 				return
@@ -84,16 +88,24 @@ func (b *Browser) Start() (err error) {
 	return
 }
 
+var getTextText string
+
 func (b *Browser) getTexts(multiSelection *agouti.MultiSelection) (texts []string, err error) {
 	var elements []*api.Element
-	elements, err = multiSelection.Elements()
-	if err != nil {
-		err = fmt.Errorf("Failed to get elements: %v", err)
-		return
+	if isTest {
+		elements = []*api.Element{nil, nil, nil, nil}
+	} else {
+		elements, err = multiSelection.Elements()
+		if err != nil {
+			err = fmt.Errorf("Failed to get elements: %v", err)
+			return
+		}
 	}
 	for _, element := range elements {
 		var text string
-		if text, err = element.GetText(); err != nil {
+		if isTest {
+			text = getTextText
+		} else if text, err = element.GetText(); err != nil {
 			err = fmt.Errorf("Failed to get text for element: %v", err)
 			return
 		}

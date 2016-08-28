@@ -5,6 +5,7 @@ import (
 )
 
 func TestBrowser(t *testing.T) {
+	isTest = true
 	b, err := New()
 	if err != nil {
 		t.Errorf("New() failed: %v", err)
