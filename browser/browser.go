@@ -88,7 +88,7 @@ func (b *Browser) Start() (err error) {
 	return
 }
 
-var getTextText string
+var getTextTexts []string
 
 func (b *Browser) getTexts(multiSelection *agouti.MultiSelection) (texts []string, err error) {
 	var elements []*api.Element
@@ -101,10 +101,12 @@ func (b *Browser) getTexts(multiSelection *agouti.MultiSelection) (texts []strin
 			return
 		}
 	}
-	for _, element := range elements {
+	for i, element := range elements {
 		var text string
 		if isTest {
-			text = getTextText
+			if i < len(getTextTexts) {
+				text = getTextTexts[i]
+			}
 		} else if text, err = element.GetText(); err != nil {
 			err = fmt.Errorf("Failed to get text for element: %v", err)
 			return
