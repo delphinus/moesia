@@ -9,10 +9,13 @@ gom-update: ## Update gom
 	go get -u github.com/mattn/gom
 
 test: ## Run tests only
-	gom test `go list ./... | grep -v vendor`
+	gom test -v `go list ./... | grep -v vendor`
 
 build: ## Build binary
 	gom build ./cmd/moesia
+
+run: ## Build binary and run
+	gom run ./cmd/moesia/main.go
 
 install-dependencies: ## Install packages for dependencies
 	gom install
