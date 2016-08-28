@@ -3,6 +3,7 @@ package browser
 import (
 	"fmt"
 	"io/ioutil"
+	"time"
 
 	"github.com/sclevine/agouti"
 	"github.com/sclevine/agouti/api"
@@ -14,6 +15,8 @@ const topURL = "https://as.its-kenpo.or.jp/service_category/index"
 const firstLinkText = "直営・通年・夏季保養施設(空き照会)"
 const pageWidth = 1280
 const pageHeight = 1024
+const readTimeFormat = "2006年1月2日 -0700 MST"
+const writeTimeFormat = "1/2 (Mon)"
 
 var hotels = []string{"トスラブ箱根ビオーレ", "トスラブ箱根和奏林"}
 
@@ -78,8 +81,10 @@ func (b *Browser) Start() (err error) {
 			if optionTexts, err = b.getTexts(options); err != nil {
 				return
 			}
+			var date time.Time
 			for _, optionText := range optionTexts {
-				fmt.Printf("%s: %s\n", hotel, optionText)
+				date, err = time.Parse(readTimeFormat, optionText+" +0900 JST")
+				fmt.Printf("%s: %s\n", hotel, date.Format(writeTimeFormat))
 			}
 			b.page.Back()
 		}
