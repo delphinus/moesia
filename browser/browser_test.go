@@ -23,6 +23,7 @@ func TestGetTexts(t *testing.T) {
 	isTest = true
 	getTextTexts = []string{"", "hoge", "fuga", ""}
 	b, _ := New()
+	defer b.End()
 	var texts []string
 	var err error
 	if texts, err = b.getTexts(&agouti.MultiSelection{}); err != nil {
