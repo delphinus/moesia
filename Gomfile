@@ -1,2 +1,6 @@
 gom 'github.com/sclevine/agouti'
 gom 'github.com/urfave/cli'
+
+group :test do
+	gom 'github.com/MakeNowJust/heredoc'
+end
