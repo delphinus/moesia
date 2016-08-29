@@ -23,11 +23,12 @@ type Time struct {
 	time.Time
 }
 
-var jst = time.FixedZone("Asia/Tokyo", 9*60*60)
+// JST is a timezone for "Asia/Tokyo"
+var JST = time.FixedZone("Asia/Tokyo", 9*60*60)
 
 // MoesiaParseInLocation is customized version of time.ParseInLocation
 func MoesiaParseInLocation(str string) (t *Time, err error) {
-	date, err := time.ParseInLocation(readTimeFormat, str, jst)
+	date, err := time.ParseInLocation(readTimeFormat, str, JST)
 	if err != nil {
 		return
 	}
