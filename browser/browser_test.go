@@ -1,8 +1,9 @@
 package browser
 
 import (
-	"github.com/sclevine/agouti"
 	"testing"
+
+	"github.com/sclevine/agouti"
 )
 
 func TestBrowser(t *testing.T) {
@@ -11,7 +12,7 @@ func TestBrowser(t *testing.T) {
 	if err != nil {
 		t.Errorf("New() failed: %v", err)
 	}
-	if err = b.Process(); err != nil {
+	if _, err = b.Process(); err != nil {
 		t.Errorf("Process() failed: %v", err)
 	}
 	if err = b.End(); err != nil {

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/delphinus35/moesia/util"
+	"github.com/delphinus35/moesia/vacancy"
 	"github.com/sclevine/agouti"
 	"github.com/sclevine/agouti/api"
 )
@@ -50,7 +51,7 @@ func (b *Browser) setPage() (err error) {
 }
 
 // Process will do scraping
-func (b *Browser) Process() (err error) {
+func (b *Browser) Process() (vacancies []vacancy.Vacancy, err error) {
 	if err = b.page._Navigate(topURL); err != nil {
 		err = fmt.Errorf("Failed to open topURL (%s): %v", topURL, err)
 		return
@@ -69,6 +70,7 @@ func (b *Browser) Process() (err error) {
 		if monthLinkTexts, err = b.getTexts(monthLinks); err != nil {
 			return
 		}
+		hotelVacancy := vacancy.Vacancy{Hotel: hotel}
 		for _, monthLinkText := range monthLinkTexts {
 			if err = b.page._FindByLink(monthLinkText).Click(); err != nil {
 				err = fmt.Errorf("Failed to click '%s' for hotel '%s': %v", monthLinkText, hotel, err)
@@ -82,10 +84,11 @@ func (b *Browser) Process() (err error) {
 			var date *util.Time
 			for _, optionText := range optionTexts {
 				date, err = util.MoesiaParseInLocation(optionText)
-				fmt.Printf("%s: %s\n", hotel, date.MoesiaFormat())
+				hotelVacancy.Dates = append(hotelVacancy.Dates, date)
 			}
 			b.page.Back()
 		}
+		vacancies = append(vacancies, hotelVacancy)
 		b.page.Back()
 	}
 	return
