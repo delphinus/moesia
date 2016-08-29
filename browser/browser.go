@@ -70,7 +70,7 @@ func (b *Browser) Process() (vacancies []vacancy.Vacancy, err error) {
 		if monthLinkTexts, err = b.getTexts(monthLinks); err != nil {
 			return
 		}
-		hotelVacancy := &vacancy.Vacancy{hotel, &[]*util.Time{}}
+		hotelVacancy := vacancy.Vacancy{Hotel: hotel}
 		for _, monthLinkText := range monthLinkTexts {
 			if err = b.page._FindByLink(monthLinkText).Click(); err != nil {
 				err = fmt.Errorf("Failed to click '%s' for hotel '%s': %v", monthLinkText, hotel, err)
@@ -84,10 +84,11 @@ func (b *Browser) Process() (vacancies []vacancy.Vacancy, err error) {
 			var date *util.Time
 			for _, optionText := range optionTexts {
 				date, err = util.MoesiaParseInLocation(optionText)
-				fmt.Printf("%s: %s\n", hotel, date.MoesiaFormat())
+				hotelVacancy.Dates = append(hotelVacancy.Dates, date)
 			}
 			b.page.Back()
 		}
+		vacancies = append(vacancies, hotelVacancy)
 		b.page.Back()
 	}
 	return
