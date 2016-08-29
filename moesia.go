@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/delphinus35/moesia/browser"
+	"github.com/delphinus35/moesia/vacancy"
 	"github.com/urfave/cli"
 )
 
@@ -25,10 +26,14 @@ func action(c *cli.Context) (err error) {
 		err = fmt.Errorf("Browser has occurred error: %v", err)
 		return
 	}
-	if err = b.Process(); err != nil {
+	var vacancies []vacancy.Vacancy
+	if vacancies, err = b.Process(); err != nil {
 		filename, _ := b.Screenshot()
 		err = fmt.Errorf("Browser process has errors: %v, saved screenshot: %s", err, filename)
 		return
+	}
+	for _, v := range vacancies {
+		fmt.Println(v.String())
 	}
 	if err = b.End(); err != nil {
 		err = fmt.Errorf("Browser finish process has errors: %v", err)
