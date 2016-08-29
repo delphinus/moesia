@@ -1,8 +1,9 @@
 package browser
 
 import (
-	"github.com/sclevine/agouti"
 	"testing"
+
+	"github.com/sclevine/agouti"
 )
 
 func TestBrowser(t *testing.T) {
