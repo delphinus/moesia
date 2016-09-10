@@ -6,6 +6,7 @@ import (
 
 	"github.com/delphinus35/moesia/browser"
 	"github.com/delphinus35/moesia/config"
+	"github.com/delphinus35/moesia/mail"
 	"github.com/delphinus35/moesia/vacancy"
 	"github.com/urfave/cli"
 )
@@ -41,7 +42,11 @@ func action(c *cli.Context) (err error) {
 		err = fmt.Errorf("Browser process has errors: %v, saved screenshot: %s", err, filename)
 		return
 	}
-	fmt.Print(vacancies.String())
+	m := mail.New(cfg)
+	if err = m.Send(vacancies.String()); err != nil {
+		err = fmt.Errorf("cannot send mail: %v", err)
+		return
+	}
 	if err = b.End(); err != nil {
 		err = fmt.Errorf("Browser finish process has errors: %v", err)
 		return
