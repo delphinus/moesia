@@ -5,16 +5,17 @@ import (
 	"os"
 
 	"github.com/delphinus35/moesia/browser"
+	"github.com/delphinus35/moesia/config"
 	"github.com/delphinus35/moesia/vacancy"
 	"github.com/urfave/cli"
 )
 
-var config *Config
+var cfg *config.Config
 
 // NewApp returns CLI app by urfave/cli
 func NewApp() (app *cli.App) {
 	var err error
-	if config, err = NewConfig(); err != nil {
+	if cfg, err = config.New(); err != nil {
 		fmt.Fprintf(os.Stderr, "config file cannot be loaded: %v", err)
 		os.Exit(1)
 	}

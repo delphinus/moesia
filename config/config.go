@@ -1,4 +1,4 @@
-package moesia
+package config
 
 import (
 	"encoding/json"
@@ -16,8 +16,8 @@ type Config struct {
 	GmailPassword string   `json:"gmailPassword"`
 }
 
-// NewConfig returns a new instance of Config
-func NewConfig() (config *Config, err error) {
+// New returns a new instance of Config
+func New() (config *Config, err error) {
 	configFilename := fmt.Sprintf("%s/.config/moesia/config.json", os.Getenv("HOME"))
 	if _, err = os.Stat(configFilename); err != nil {
 		if config, err = makeInitialConfigFile(configFilename); err != nil {
