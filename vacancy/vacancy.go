@@ -21,3 +21,15 @@ func (v *Vacancy) String() (str string) {
 	str = strings.Join(strs, "\n")
 	return
 }
+
+// Vacancies is an array of Vacancy
+type Vacancies struct {
+	List []Vacancy
+}
+
+func (vs *Vacancies) String() (str string) {
+	for _, v := range vs.List {
+		str += fmt.Sprintln(v.String())
+	}
+	return
+}

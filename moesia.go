@@ -84,15 +84,13 @@ func action(c *cli.Context) (err error) {
 		err = fmt.Errorf("Browser has occurred error: %v", err)
 		return
 	}
-	var vacancies []vacancy.Vacancy
+	var vacancies vacancy.Vacancies
 	if vacancies, err = b.Process(); err != nil {
 		filename, _ := b.Screenshot()
 		err = fmt.Errorf("Browser process has errors: %v, saved screenshot: %s", err, filename)
 		return
 	}
-	for _, v := range vacancies {
-		fmt.Println(v.String())
-	}
+	fmt.Print(vacancies.String())
 	if err = b.End(); err != nil {
 		err = fmt.Errorf("Browser finish process has errors: %v", err)
 		return
