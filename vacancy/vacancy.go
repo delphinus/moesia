@@ -37,9 +37,7 @@ func (vs *Vacancies) MailBody() (html string, err error) {
 	tmplString := string(MustAsset(TemplateName))
 	tmpl := template.Must(template.New(TemplateName).Parse(tmplString))
 	var buf bytes.Buffer
-	err = tmpl.Execute(&buf, map[string][]Vacancy{
-		"list": vs.List,
-	})
+	err = tmpl.Execute(&buf, vs)
 	if err != nil {
 		err = fmt.Errorf("failed to execute template: %v", err)
 		return
