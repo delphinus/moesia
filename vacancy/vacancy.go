@@ -29,14 +29,13 @@ type Vacancies struct {
 	List []Vacancy
 }
 
-// TemplateFilename specified a template filename for mail body
-var TemplateFilename = "../templates/mailBody.tmpl"
-
-var funcMap = template.FuncMap{}
+// TemplateName specified a template filename for mail body
+var TemplateName = "templates/mailBody.tmpl"
 
 // MailBody returns body string for mail
 func (vs *Vacancies) MailBody() (html string, err error) {
-	tmpl := template.Must(template.New("mailBody.tmpl").Funcs(funcMap).ParseFiles(TemplateFilename))
+	tmplString := string(MustAsset(TemplateName))
+	tmpl := template.Must(template.New(TemplateName).Parse(tmplString))
 	var buf bytes.Buffer
 	err = tmpl.Execute(&buf, map[string][]Vacancy{
 		"list": vs.List,

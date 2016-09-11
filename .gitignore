@@ -81,3 +81,4 @@ Session.vim
 ### private ignores
 /vendor
 /moesia
+/vacancy/templates.go
