@@ -1,7 +1,9 @@
 package vacancy
 
 import (
+	"bytes"
 	"fmt"
+	"html/template"
 	"strings"
 
 	"github.com/delphinus35/moesia/util"
@@ -27,9 +29,22 @@ type Vacancies struct {
 	List []Vacancy
 }
 
-func (vs *Vacancies) String() (str string) {
-	for _, v := range vs.List {
-		str += fmt.Sprintln(v.String())
+// TemplateFilename specified a template filename for mail body
+var TemplateFilename = "../templates/mailBody.tmpl"
+
+var funcMap = template.FuncMap{}
+
+// MailBody returns body string for mail
+func (vs *Vacancies) MailBody() (html string, err error) {
+	tmpl := template.Must(template.New("mailBody.tmpl").Funcs(funcMap).ParseFiles(TemplateFilename))
+	var buf bytes.Buffer
+	err = tmpl.Execute(&buf, map[string][]Vacancy{
+		"list": vs.List,
+	})
+	if err != nil {
+		err = fmt.Errorf("failed to execute template: %v", err)
+		return
 	}
+	html = buf.String()
 	return
 }

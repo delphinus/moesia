@@ -43,7 +43,12 @@ func action(c *cli.Context) (err error) {
 		return
 	}
 	m := mail.New(cfg)
-	if err = m.Send(vacancies.String()); err != nil {
+	body, err := vacancies.MailBody()
+	if err != nil {
+		err = fmt.Errorf("failed to create mail body: %v", err)
+		return
+	}
+	if err = m.Send(body); err != nil {
 		err = fmt.Errorf("cannot send mail: %v", err)
 		return
 	}

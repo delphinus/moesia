@@ -41,3 +41,14 @@ func (t *Time) MoesiaFormat() (str string) {
 	str = fmt.Sprintf("%s (%s)", t.Format(writeTimeFormat), weekdayMap[t.Weekday()])
 	return
 }
+
+// DateClass means class for HTML Element
+func (t *Time) DateClass() string {
+	if t.Weekday() == time.Saturday {
+		return "saturday"
+	} else if t.Weekday() == time.Sunday {
+		return "sunday"
+	} else {
+		return ""
+	}
+}

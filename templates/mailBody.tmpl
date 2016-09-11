@@ -1,0 +1,42 @@
+<meta charset="UTF-8">
+<style>
+    body {
+        font-family: sans-serif;
+    }
+    h2 {
+        font-size: x-large;
+        font-weight: bold;
+    }
+    dt {
+        font-size: large;
+        font-weight: bold;
+    }
+    dd {
+        margin-left: 0;
+    }
+    .saturday {
+        font-weight: bold;
+        color: darkblue;
+    }
+    .sunday {
+        font-weight: bold;
+        color: maroon;
+    }
+</style>
+<body>
+    <h2>予約ページ</h2>
+    <p><a href="https://as.its-kenpo.or.jp/service_category/index">関東ITソフトウェア 健康保険組合 - 施設予約システム</a></p>
+    <h2>最新情報</h2>
+    <dl class="hotel-list">
+        {{range .list -}}
+        <dt>{{.Hotel}}</dt>
+        <dd>
+            <ul>
+                {{range .Dates -}}
+                <li class="{{.DateClass}}">{{.MoesiaFormat}}</li>
+                {{end}}
+            </ul>
+        </dd>
+        {{end}}
+    </dl>
+</body>
