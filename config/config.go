@@ -35,7 +35,7 @@ func New() (config *Config, err error) {
 }
 
 func makeInitialConfigFile(filename string) (config *Config, err error) {
-	if err = os.MkdirAll(path.Dir(filename), 0777); err != nil {
+	if err = os.MkdirAll(path.Dir(filename), 0700); err != nil {
 		err = fmt.Errorf("failed to mkdir: %v", err)
 		return
 	}
@@ -47,7 +47,7 @@ func makeInitialConfigFile(filename string) (config *Config, err error) {
 	defer file.Close()
 	encoder := json.NewEncoder(file)
 	if err = encoder.Encode(config); err != nil {
-		err = fmt.Errorf("failed to encode CONfig %v: %v", config, err)
+		err = fmt.Errorf("failed to encode Config %v: %v", config, err)
 		return
 	}
 	return
