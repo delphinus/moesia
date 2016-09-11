@@ -83,7 +83,10 @@ func (b *Browser) Process() (vacancies vacancy.Vacancies, err error) {
 			}
 			var date *util.Time
 			for _, optionText := range optionTexts {
-				date, err = util.MoesiaParseInLocation(optionText)
+				if date, err = util.MoesiaParseInLocation(optionText); err != nil {
+					err = fmt.Errorf("cannot parse date string '%s': %v", optionText, err)
+					return
+				}
 				hotelVacancy.Dates = append(hotelVacancy.Dates, date)
 			}
 			b.page.Back()
