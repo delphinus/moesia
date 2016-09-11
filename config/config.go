@@ -16,16 +16,17 @@ type Config struct {
 	GmailPassword string   `json:"gmailPassword"`
 }
 
+var filename = fmt.Sprintf("%s/.config/moesia/config.json", os.Getenv("HOME"))
+
 // New returns a new instance of Config
 func New() (config *Config, err error) {
-	configFilename := fmt.Sprintf("%s/.config/moesia/config.json", os.Getenv("HOME"))
-	if _, err = os.Stat(configFilename); err != nil {
-		if config, err = makeInitialConfigFile(configFilename); err != nil {
+	if _, err = os.Stat(filename); err != nil {
+		if config, err = makeInitialConfigFile(filename); err != nil {
 			err = fmt.Errorf("failed to make initial config file: %v", err)
 			return
 		}
 	} else {
-		if config, err = loadConfig(configFilename); err != nil {
+		if config, err = loadConfig(filename); err != nil {
 			err = fmt.Errorf("failed to load config file: %v", err)
 			return
 		}
