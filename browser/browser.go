@@ -51,7 +51,7 @@ func (b *Browser) setPage() (err error) {
 }
 
 // Process will do scraping
-func (b *Browser) Process() (vacancies []vacancy.Vacancy, err error) {
+func (b *Browser) Process() (vacancies vacancy.Vacancies, err error) {
 	if err = b.page._Navigate(topURL); err != nil {
 		err = fmt.Errorf("Failed to open topURL (%s): %v", topURL, err)
 		return
@@ -88,7 +88,7 @@ func (b *Browser) Process() (vacancies []vacancy.Vacancy, err error) {
 			}
 			b.page.Back()
 		}
-		vacancies = append(vacancies, hotelVacancy)
+		vacancies.List = append(vacancies.List, hotelVacancy)
 		b.page.Back()
 	}
 	return
