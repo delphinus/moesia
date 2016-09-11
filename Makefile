@@ -8,13 +8,16 @@ gom: ## Install gom
 gom-update: ## Update gom
 	go get -u github.com/mattn/gom
 
-test: ## Run tests only
+generate-template-bindata: ## Generate bindata for templates
+	gom exec go-bindata -pkg vacancy -o vacancy/templates.go ./templates/...
+
+test: generate-template-bindata ## Run tests only
 	gom test -v `go list ./... | grep -v vendor`
 
-build: ## Build binary
+build: generate-template-bindata ## Build binary
 	gom build ./cmd/moesia
 
-run: ## Build binary and run
+run: generate-template-bindata ## Build binary and run
 	gom run ./cmd/moesia/main.go
 
 install-dependencies: ## Install packages for dependencies
