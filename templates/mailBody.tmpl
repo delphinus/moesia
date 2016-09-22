@@ -28,15 +28,19 @@
     <p><a href="https://as.its-kenpo.or.jp/service_category/index">関東ITソフトウェア 健康保険組合 - 施設予約システム</a></p>
     <h2>最新情報</h2>
     <dl class="hotel-list">
-        {{range .List -}}
-        <dt>{{.Hotel}}</dt>
+        {{ range .Vacancies.List -}}
+        <dt>{{ .Hotel }}</dt>
         <dd>
             <ul>
-                {{range .Dates -}}
-                <li class="{{.DateClass}}">{{.MoesiaFormat}}</li>
-                {{end}}
+                {{ range .Dates -}}
+                <li class="{{ .DateClass }}">{{ .MoesiaFormat }}</li>
+                {{ end }}
             </ul>
         </dd>
-        {{end}}
+        {{ end }}
+    </dl>
+    <h2>差分</h2>
+    <dl>
+        <dt>一つ前の取得日時</dt>
     </dl>
 </body>

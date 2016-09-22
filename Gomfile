@@ -1,5 +1,6 @@
 gom 'github.com/jteeuwen/go-bindata'
 gom 'github.com/sclevine/agouti'
+gom 'github.com/sergi/go-diff/diffmatchpatch'
 gom 'github.com/urfave/cli'
 gom 'gopkg.in/gomail.v2'
 
