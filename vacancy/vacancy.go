@@ -76,8 +76,8 @@ func (vs *Vacancies) MailBody() (html string, err error) {
 }
 
 type diffData struct {
-	BeforeUpdatedAt *util.Time
-	AfterUpdatedAt  *util.Time
+	BeforeUpdatedAt time.Time
+	AfterUpdatedAt  time.Time
 	Diff            []diffmatchpatch.Diff
 }
 
@@ -87,8 +87,8 @@ func (vs *Vacancies) diff() (data diffData, err error) {
 		err = fmt.Errorf("failed to load cache: %v", err)
 		return
 	}
-	data.BeforeUpdatedAt = *cache.UpdatedAt
-	data.AfterUpdatedAt = *util.Time.Now()
+	data.BeforeUpdatedAt = cache.UpdatedAt
+	data.AfterUpdatedAt = time.Now()
 	data.Diff = vs.rawDiff(cache.Vacancies.String(), vs.String())
 	return
 }

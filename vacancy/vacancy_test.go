@@ -1,6 +1,7 @@
 package vacancy
 
 import (
+	"os"
 	"testing"
 	"time"
 
@@ -37,7 +38,9 @@ func TestVacancyString(t *testing.T) {
 
 func TestVacanciesMailBody(t *testing.T) {
 	vs := sampleVacancies("ほげホテル", "ふがホテル")
-	if _, err := vs.MailBody(); err != nil {
+	if html, err := vs.MailBody(); err != nil {
 		t.Errorf("failed to create mail body: %v", err)
+	} else if os.Getenv("DEBUG") == "1" {
+		t.Log(html)
 	}
 }
