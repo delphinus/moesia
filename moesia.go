@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/delphinus35/moesia/browser"
-	"github.com/delphinus35/moesia/config"
-	"github.com/delphinus35/moesia/mail"
-	"github.com/delphinus35/moesia/vacancy"
+	"github.com/delphinus/moesia/browser"
+	"github.com/delphinus/moesia/config"
+	"github.com/delphinus/moesia/mail"
+	"github.com/delphinus/moesia/vacancy"
 	"github.com/urfave/cli"
 )
 

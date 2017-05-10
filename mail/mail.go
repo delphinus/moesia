@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/delphinus35/moesia/config"
+	"github.com/delphinus/moesia/config"
 	"gopkg.in/gomail.v2"
 )
 

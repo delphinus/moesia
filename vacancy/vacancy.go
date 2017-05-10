@@ -6,7 +6,7 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/delphinus35/moesia/util"
+	"github.com/delphinus/moesia/util"
 )
 
 // Vacancy is a struct to store vacancies of hotels

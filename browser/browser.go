@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/delphinus35/moesia/util"
-	"github.com/delphinus35/moesia/vacancy"
+	"github.com/delphinus/moesia/util"
+	"github.com/delphinus/moesia/vacancy"
 	"github.com/sclevine/agouti"
 	"github.com/sclevine/agouti/api"
 )

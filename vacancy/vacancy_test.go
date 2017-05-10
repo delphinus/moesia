@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/MakeNowJust/heredoc"
-	"github.com/delphinus35/moesia/util"
+	"github.com/delphinus/moesia/util"
 )
 
 func sampleVacancy(hotel string) (v Vacancy) {

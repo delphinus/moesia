@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/delphinus35/moesia"
+	"github.com/delphinus/moesia"
 )
 
 func main() {

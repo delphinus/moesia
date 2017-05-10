@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/delphinus35/moesia/config"
+	"github.com/delphinus/moesia/config"
 )
 
 func TestFailedToSend(t *testing.T) {
